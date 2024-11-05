@@ -7,7 +7,7 @@ from multidim_galerkin_pod import ten_sor_utils as tsu
 spacepodonly = False
 
 freq = np.linspace(10, 400, 391)
-snapshot_data = np.load('./data/01_data.npz')
+snapshot_data = np.load('../data/01_data.npz')
 snapshots_freq = snapshot_data['snapshots_freq']
 
 datadims = snapshots_freq.shape
