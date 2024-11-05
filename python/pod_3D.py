@@ -42,7 +42,7 @@ for _fac in [2, 4, 6]:
     prjtnsr_o = tsu.inflate_modek(prjtnsr_ot, ksvecs=svdvecs_ot, mode=2)
     prjtnsr_ = tsu.inflate_modek(prjtnsr_o, ksvecs=svdvecs_o, mode=1)
 
-    difftens = (snapshots_freq - prjtnsr_)/nrm_snapshots_freq
+    difftens = (snapshots_freq - prjtnsr_)
     difftl.append(difftens)
     if not spacepodonly:
         lbllst.append(f'{pdone}x{pdtwo}x{pdthr}')
@@ -56,16 +56,18 @@ for _fac in [2, 4, 6]:
 (nx, ny, _) = snapshots_freq.shape
 
 plt.figure(330, figsize=(6, 3))
-clrs = [.2]
+clrs = [.5]
 plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.plasma(clrs))
 
-for idx in range(0, nx, 2):
-    for idy in range(0, ny, 2):
-        plt.semilogy(freq, np.abs(snapshots_freq[idx, idy, :]),
-                     linewidth=2, alpha=.1)
+# for idx in range(0, nx, 2):
+#     for idy in range(0, ny, 2):
+#         plt.semilogy(freq, np.abs(snapshots_freq[idx, idy, :]),
+#                      linewidth=2, alpha=.1)
+plt.semilogy(freq, np.linalg.norm(snapshots_freq, axis=(0, 1)),
+             linewidth=2)
 plt.xlabel('Frequency (in Hz)')
 plt.ylabel('Plate transverse deformation (in m)')
-plt.title('FRF at multiple spatially distributed points')
+plt.title('norm of FRF over the frequency range')
 plt.tight_layout()
 plt.savefig('FRF.png')
 
@@ -73,21 +75,17 @@ plt.figure(331, figsize=(6, 3))
 clrs = [.9, .5, .2]
 plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.viridis(clrs))
 
-for idx in range(0, nx, 2):
-    for idy in range(0, ny, 2):
-        for difftens in difftl:
-            if idx+idy == 0:
-                lbl = lbllst.pop(0)
-                plt.semilogy(freq, np.abs(difftens[idx, idy, :]),
-                             linewidth=2, alpha=.8, label=lbl)
-            else:
-                plt.semilogy(freq, np.abs(difftens[idx, idy, :]),
-                             linewidth=2, alpha=.1)
+plt.figure(331, figsize=(6, 3))
+
+for kkk, difftens in enumerate(difftl):
+    lbl = lbllst[kkk]
+    plt.semilogy(freq, np.linalg.norm(difftens, axis=(0, 1)),
+                 linewidth=2, alpha=.8, label=lbl)
 
 plt.legend()
 plt.xlabel('Frequency (in Hz)')
 plt.ylabel('Plate transverse deformation (in m)')
-plt.title('relative approximation error by HOSVD of size ' +
+plt.title('Approximation error by HOSVD of size ' +
           '$d_x \\times d_y \\times d_f$')
 plt.tight_layout()
 plt.savefig('FRF-reldiff-HoSVDselection.png')
