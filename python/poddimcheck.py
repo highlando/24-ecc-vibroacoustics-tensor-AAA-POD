@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from multidim_galerkin_pod import ten_sor_utils as tsu
 
 freq = np.linspace(10, 400, 391)
-snapshot_data = np.load('./data/01_data.npz')
+snapshot_data = np.load('../data/01_data.npz')
 snapshots_freq = snapshot_data['snapshots_freq']
 
 datadims = snapshots_freq.shape
@@ -52,7 +52,7 @@ for dxy in spacedims:
         prjtnsr_o = tsu.inflate_modek(prjtnsr_ot, ksvecs=svdvecs_ot, mode=2)
         prjtnsr_ = tsu.inflate_modek(prjtnsr_o, ksvecs=svdvecs_o, mode=1)
 
-        difftens = (snapshots_freq - prjtnsr_)/np.linalg.norm(snapshots_freq)
+        difftens = (snapshots_freq - prjtnsr_)
         reler = np.linalg.norm(difftens)
         print(f'crtns: {dxy:02d}x{dxy:02d}x{df:03d}: relerr = {reler:.4e}')
         frqerr.append(reler)
@@ -62,7 +62,7 @@ extent = freqqdims[0], freqqdims[-1], spacedims[-1], spacedims[0]
 errmat = np.array(spaceerr)
 plt.figure(figsize=(10, 3))
 plt.imshow(np.log10(errmat), extent=extent)
-plt.title('Logarithm of relative approximation error')
+plt.title('Logarithm of approximation error')
 plt.xlabel('$d_f$ -- modes in frequency dimension')
 plt.ylabel('$d_x = d_y$ -- modes in spatial dimension')
 plt.colorbar()
