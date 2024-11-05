@@ -31,23 +31,23 @@ for largeorsmall = 1:4
       dtnsr = podtnsdata.pod3x3.dttnsr_ot;
       dvcso = podtnsdata.pod3x3.svdvecs_o;
       dvcsot = podtnsdata.pod3x3.svdvecs_ot;
-      clgnd = '3x3 HOSVD'
+      clgnd = '3x3 reduction'
       nxy = 3
     case 2
       dtnsr = podtnsdata.pod6x6.dttnsr_ot;
       dvcso = podtnsdata.pod6x6.svdvecs_o;
       dvcsot = podtnsdata.pod6x6.svdvecs_ot;
-      clgnd = '6x6 HOSVD'
+      clgnd = '6x6 reduction'
       nxy = 6
     case 3
       dtnsr = podtnsdata.pod12x12.dttnsr_ot;
       dvcso = podtnsdata.pod12x12.svdvecs_o;
       dvcsot = podtnsdata.pod12x12.svdvecs_ot;
-      clgnd = '12x12 HOSVD'
+      clgnd = '12x12 reduction'
       nxy = 12
     case 4 
       dtnsr = ftnsr;  
-      clgnd = 'full data'
+      clgnd = 'full spatial data'
       nxy = 21
   end
 
@@ -84,8 +84,18 @@ for largeorsmall = 1:4
     prjdtnsr = nmodeproduct(prjdtnsro, dvcso, 1);
     aaatensor = prjdtnsr;
   end
+  tnsfnorms = zeros(1, 391);
+  for w = pts
+    tnsfnorms(1, w-9) = norm(ftnsr(:, :, w-9)-aaatensor(:, :, w-9));
+  end
 
   figure(10101)
-  semilogy(abs(ftnsr(:)-aaatensor(:))/norm(ftnsr(:)), 'DisplayName', clgnd)
+  % semilogy(abs(ftnsr(:)-aaatensor(:)), 'DisplayName', clgnd)
+  semilogy(pts, tnsfnorms, 'DisplayName', clgnd)
   hold('on')
 end
+title('HOSVD in space and AAA in frequency approximation')
+xlabel('Frequency (in Hz)')
+ylabel('Approximation Error')
+legend()
+saveas(gcf, 'tensoraaaapprox.png')
