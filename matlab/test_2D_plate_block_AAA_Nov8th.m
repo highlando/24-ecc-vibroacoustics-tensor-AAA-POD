@@ -48,8 +48,8 @@ size(FF)
 
 % set tolerance here
 %opts.tol = 1e-4;
-%opts.tol = 1e-6;
-opts.tol = 1e-8;
+opts.tol = 1e-6;
+% opts.tol = 1e-8;
 %opts.tol = 1e-10;
 
 % set maximum numbe rof iterations (100 to make sure it stops at the
@@ -97,5 +97,12 @@ legend('Block-AAA','SetValued-AAA');
 ylabel('Error (2-norm of the deviation)');
 xlabel('Frequency');
 
+AAAcoretensor = zeros(size(dtnsr));
+for ii = 1:length(pts)
+  AAAcoretensor(:, :, ii) = R1(pts(ii));
+end
 
-
+prjdtnsro = nmodeproduct(AAAcoretensor, dvcsot, 2);
+prjdtnsr = nmodeproduct(prjdtnsro, dvcso, 1);
+% compare to full data
+norm(ftnsr(:)-prjdtnsr(:), 'fro')
