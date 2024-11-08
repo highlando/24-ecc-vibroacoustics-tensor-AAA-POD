@@ -92,5 +92,12 @@ legend('Block-AAA','SetValued-AAA');
 ylabel('Error (2-norm of the deviation)');
 xlabel('Frequency');
 
+AAAcoretensor = zeros(size(dtnsr));
+for ii = 1:length(pts)
+  AAAcoretensor(:, :, ii) = R1(pts(ii));
+end
 
-
+prjdtnsro = nmodeproduct(AAAcoretensor, dvcsot, 2);
+prjdtnsr = nmodeproduct(prjdtnsro, dvcso, 1);
+% compare to full data
+norm(ftnsr(:)-prjdtnsr(:), 'fro')
