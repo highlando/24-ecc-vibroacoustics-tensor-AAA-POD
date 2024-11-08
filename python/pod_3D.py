@@ -22,7 +22,7 @@ datadict = {'full': dttnsr}
 for _fac in [2, 4, 6]:
     pdone = _fac*3
     pdtwo = _fac*3
-    pdthr = _fac*10
+    pdthr = _fac*_fac*3
 
     svdvecs_o, dttnsr_o = tsu.modek_svd(dttnsr, svddim=pdone, mode=1,
                                         return_reduced_tensor=True,

@@ -48,8 +48,8 @@ size(FF)
 
 % set tolerance here
 %opts.tol = 1e-4;
-%opts.tol = 1e-6;
-opts.tol = 1e-8;
+opts.tol = 1e-6;
+% opts.tol = 1e-8;
 %opts.tol = 1e-10;
 
 % set maximum numbe rof iterations (100 to make sure it stops at the
