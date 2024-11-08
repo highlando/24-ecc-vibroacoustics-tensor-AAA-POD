@@ -41,16 +41,13 @@ if ( needZ )
     return
 end
 
-% Scale the functions
-normF = max(abs(F),[],1);
-F = bsxfun(@rdivide,F,normF);
 
 % Left scaling matrix:
 SF = spdiags(F, 0:-M:-M*(nF-1), M*nF, M);
 
 % Initialize values
 F = F(:);
-R = mean(F);
+R = 0;
 errvec = zeros(mmax,1);
 z = zeros(mmax,1);
 f = zeros(mmax,nF);
@@ -63,13 +60,13 @@ C = zeros(M,0);
 
 % AAA iteration:
 for m = 1:mmax
-    [errvec(m),loc] = max(abs(F-R));               % Select next support point where error is largest
+    err = sum(reshape(abs(F-R).^2, M, []), 2).^.5;
+    [errvec(m),loc] = max(err);                   % Select next support point where error is largest
     if ( errvec(m) <= tol )
         m = m-1;
         break
     end
     
-    loc = mod(loc,M);
     ind(m,:) =  loc + (M*(loc==0):M:(nF-1+(loc==0))*M);  % Get indices of the z_i
     z(m) = Z(ind(m,1));                           % Add interpolation point
     f(m,:) = F(ind(m,:));                         % Add function values
@@ -124,8 +121,6 @@ f = f(1:m,:);
 w = w(1:m);
 z = z(1:m);
 
-% Scale function values back
-f = bsxfun(@times,f,normF);
 
 % Note: When M == 2, one weight is zero and r is constant.
 % To obtain a good approximation, interpolate in both sample points.

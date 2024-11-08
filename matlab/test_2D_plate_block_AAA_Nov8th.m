@@ -72,9 +72,9 @@ ord2 = length(zk2)
 disp(['EXAMPLE 1 - best RMSE achieved: ' num2str(rmse(pts,R1,FF)) ])
 figure, semilogy(0:length(rmse1)-1,rmse1), hold on
 semilogy([0,opts.maxit-1],opts.tol*[1,1],'k--');
-%semilogy(0:length(rmse2)-1,rmse2,'-.r');
+semilogy(0:length(rmse2)-1,rmse2,'-.r');
 xlabel('degree'), ylabel('RMSE')
-legend('Block-AAA convergence')
+legend('Block-AAA convergence','Set-valued AAA convergence')
 
 %Here are the interpolation points (frequencies) that the algorithm
 %Block-AAA selects

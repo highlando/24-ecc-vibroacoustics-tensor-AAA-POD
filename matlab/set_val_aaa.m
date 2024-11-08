@@ -20,7 +20,7 @@ for i = 1:p
     Frow(i,:) = reshape(FF{i},1,m*n);
 end
 
-[Rrow, POL, RES, ZER, zk, fk, wk, err] = aaa_sv(Frow, lam, 'mmax', iter+1, 'tol', tol);
+[Rrow, POL, RES, ZER, zk, fk, wk, rmse] = aaa_sv(Frow, lam, 'mmax', iter+1, 'tol', tol);
 
 Ck = cell(length(wk),1); Dk = cell(length(wk),1);
 for j = 1:length(wk)
@@ -29,13 +29,6 @@ for j = 1:length(wk)
     Dk{j} = wk(j);
 end
 Rbary = @(z) eval_bary(z,zk,Ck,Dk);
-
-
-% compute rmse
-for i = 1:p
-   err(i) = norm(FF{i}-Rbary(lam(i)),'fro').^2; 
-end
-rmse = sqrt(sum(err)/p);
 
 
 end
