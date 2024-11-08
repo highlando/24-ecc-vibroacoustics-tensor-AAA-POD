@@ -81,8 +81,13 @@ legend('Block-AAA convergence','Set-valued AAA convergence')
 selected_pts = out1.zk.';
 
 for ii = 1:length(pts)
-    err1(ii)= norm(FF{ii}-R1(pts(ii)));
-    err2(ii)= norm(FF{ii}-R2(pts(ii)));
+%     err1(ii)= norm(FF{ii}-R1(pts(ii)));
+%     err2(ii)= norm(FF{ii}-R2(pts(ii)));
+    Fap1 = dvcso * R1(pts(ii)) * dvcsot';
+    Fap2 = dvcso * R2(pts(ii)) * dvcsot';
+    Fex = ftnsr(:, :, ii);
+    err1(ii)= norm(Fex-Fap1, 'fro');
+    err2(ii)= norm(Fex-Fap2, 'fro');
 end
 
 figure
