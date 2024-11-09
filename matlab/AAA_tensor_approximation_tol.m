@@ -15,7 +15,6 @@
 
 close all;
 
-podtnsdata = load('../data/podtnsrdata.mat');
 
 if exist('clsp')
   largeorsmall = clsp;
@@ -24,6 +23,7 @@ else
   largeorsmall = 3;
 end
 
+podtnsdata = load('../data/podtnsrdata.mat');
 ftnsr = podtnsdata.full;  % the full data
 
 switch largeorsmall
@@ -74,12 +74,12 @@ for ctol = tolvec
   % this is Block-AAA
   tic;[R1,rmse1,out1] = block_aaa(FF,pts,opts); toc
 
-  ord1 = length(out1.zk)
+  ord1 = length(out1.zk);
 
   % this is SetValued-AAA
   tic;[R2,rmse2,zk2] = set_val_aaa(FF,pts,opts.maxit,opts.tol);toc
 
-  ord2 = length(zk2)
+  ord2 = length(zk2);
 
   %Here are the interpolation points (frequencies) that the algorithm
   %Block-AAA selects
@@ -103,8 +103,10 @@ for ctol = tolvec
       err1(ii) = norm(ftnsr(:, :, ii)-app1, 'fro');
       err2(ii) = norm(ftnsr(:, :, ii)-app2, 'fro');
   end
-  fprintf('blk: nx: %d, tol: %e, err: %.2e', nx, ctol, norm(err1))
-  fprintf('set: nx: %d, tol: %e, err: %.2e', nx, ctol, norm(err2))
+  fprintf('blk: nx: %d, tol: %.1e, m: %d, err: %.2e\n', ... 
+          nx, ctol, ord1-1, norm(err1))
+  fprintf('set: nx: %d, tol: %.1e, m: %d, err: %.2e\n', ...
+          nx, ctol, ord2-1, norm(err2))
 
 end
 

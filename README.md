@@ -31,25 +31,35 @@ addpath('nmodeproduct')
 AAA_tensor_approximation_omega
 ```
 
+## Table II/III
 
+1. In `matlab` run
 
-## HOSVD
+```
+cd matlab
+clsp=2; AAA_tensor_approximation_omega  % the values for nx=ny=6
+clsp=3; AAA_tensor_approximation_omega  % the values for nx=ny=12
+```
 
- * `python/poddimcheck.py` -- checks the approximation error vs. the tensor
-   reduced tensor dimensions and plots the corresponding data sizes (=number of
-   entries in the core tensor and the basis vectors)
- * `python/pod_3D.py` -- computes a few HOSVD approximations
+This gives the AAA errors and orders as in **Table II**.
 
-## AAA
+2. Then use the script in `misc/blockdegree2hosvd.py` to calculate the data sizes
+and corresponding reduced (HOSVD) frequency dimensions `tnf`. This gives that
+data of **Table III**
 
- * `matlab/test_2D_plate_block_AAA.m` -- computes the AAA interpolation for
-   various sizes of the (spatially reduced) tensor, inflates by multiplying with
-   the basis vectors, and computes the difference to the full tensor.
+3. Finally, run 
+
+```sh
+cd python
+python3 podAAAcheck.py
+```
+
+with the `tnf`s provided, to get the *HOSVD* errors of **Table II**.
 
 ## Data
 
  * `data/01_data.npz` -- full order tensor data from the simulation
- * `data/podtnsrdata.mat` -- some reduced tensors for the AAA interpolation
+ * `data/podtnsrdata.mat` -- the reduced tensors for the AAA interpolation
 
 ## Dependencies
 
