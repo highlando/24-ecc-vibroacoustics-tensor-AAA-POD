@@ -5,7 +5,7 @@ This is the code that accompanies the paper
 
 > Adaptive Rational Interpolation and Higher-order SVD for Low-rank Tensor Approximation in Vibroacoustics Simulation
 
-which we (Jan Heiland, Victor Gosea, Ulrich R&ouml;mer, Davide Pradovera, Harikrishnan Sreekumar, Langer Sabine) submitted for presentation at the ECC-2025.
+which we (Jan Heiland, Victor Gosea, Ulrich R&ouml;mer, Davide Pradovera, Harikrishnan Sreekumar, Sabine Langer) submitted for presentation at the ECC-2025.
 
 ## Reproduction of results
 
