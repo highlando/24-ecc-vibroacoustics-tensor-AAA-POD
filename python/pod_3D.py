@@ -22,7 +22,7 @@ datadict = {'full': dttnsr}
 for _fac in [2, 4, 6]:
     pdone = _fac*3
     pdtwo = _fac*3
-    pdthr = _fac*_fac*3
+    pdthr = _fac*_fac*2
 
     svdvecs_o, dttnsr_o = tsu.modek_svd(dttnsr, svddim=pdone, mode=1,
                                         return_reduced_tensor=True,
@@ -69,7 +69,7 @@ plt.xlabel('Frequency (in Hz)')
 plt.ylabel('Plate transverse deformation (in m)')
 plt.title('norm of FRF over the frequency range')
 plt.tight_layout()
-plt.savefig('FRF.png')
+plt.savefig('FRF.pdf')
 
 plt.figure(331, figsize=(6, 3))
 clrs = [.9, .5, .2]
@@ -86,9 +86,9 @@ plt.legend()
 plt.xlabel('Frequency (in Hz)')
 plt.ylabel('Plate transverse deformation (in m)')
 plt.title('Approximation error by HOSVD of size ' +
-          '$d_x \\times d_y \\times d_f$')
+          '$\\tilde n_1 \\times \\tilde n_2 \\times \\tilde n_3$')
 plt.tight_layout()
-plt.savefig('FRF-reldiff-HoSVDselection.png')
+plt.savefig('FRF-HoSVDselection.pdf')
 savemat('podtnsrdata.mat', datadict)
 
 plt.show()
