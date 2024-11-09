@@ -1,11 +1,13 @@
 Vibroacoustic Data Compression and Interpolation
----
+===
 
 This is the code that accompanies the paper
 
 > Adaptive Rational Interpolation and Higher-order SVD for Low-rank Tensor Approximation in Vibroacoustics Simulation
 
-which we (Jan Heiland, Victor Gosea, Ulrich R&ouml;mer, Davide Pradovera, Harikrishnan Sreekumar, Langer Sabine) submitted for presentation at the ECC-2025.
+which we (Jan Heiland, Victor Gosea, Ulrich R&ouml;mer, Davide Pradovera, Harikrishnan Sreekumar, Sabine Langer) submitted for presentation at the ECC-2025.
+
+## Reproduction of results
 
 To reproduce the results figures proceed as follows.
 
@@ -21,7 +23,7 @@ python3 pod_3D.py  # plots of Figure 2
 python3 poddimcheck.py  # plots of Figure 3
 ```
 
-## Figure 4
+### Figure 4
 
 In `matlab` run
 
@@ -31,7 +33,7 @@ addpath('nmodeproduct')
 AAA_tensor_approximation_omega
 ```
 
-## Table II/III
+### Table II/III
 
 1. In `matlab` run
 
