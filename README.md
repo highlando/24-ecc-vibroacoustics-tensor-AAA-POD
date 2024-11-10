@@ -18,7 +18,7 @@ This code is not provided. Please contact Ulrich R&ouml;mer (TU Braunschweig).
 ### Figure 2 / 3
 
 ```sh
-cd python
+cd python_hosvd
 python3 pod_3D.py  # plots of Figure 2
 python3 poddimcheck.py  # plots of Figure 3
 ```
@@ -28,7 +28,7 @@ python3 poddimcheck.py  # plots of Figure 3
 In `matlab` run
 
 ```
-cd matlab
+cd matlab_aaa
 addpath('nmodeproduct')
 AAA_tensor_approximation_omega
 ```
@@ -38,9 +38,10 @@ AAA_tensor_approximation_omega
 1. In `matlab` run
 
 ```
-cd matlab
-clsp=2; AAA_tensor_approximation_omega  % the values for nx=ny=6
-clsp=3; AAA_tensor_approximation_omega  % the values for nx=ny=12
+cd matlab_aaa
+addpath('nmodeproduct')
+clsp=2; AAA_tensor_approximation_tol  % the values for nx=ny=6
+clsp=3; AAA_tensor_approximation_tol  % the values for nx=ny=12
 ```
 
 This gives the AAA errors and orders as in **Table II**.
@@ -52,7 +53,7 @@ data of **Table III**
 3. Finally, run 
 
 ```sh
-cd python
+cd python_hosvd
 python3 podAAAcheck.py
 ```
 
