@@ -109,11 +109,13 @@ for ctol = tolvec
   fprintf('set: nx: %d, tol: %.1e, m: %d, err: %.2e\n', ...
           nx, ctol, ord2-1, norm(ftnsr-aaa2tensor, 'fro'))
 
+  tnsf1norms = squeeze(sum((ftnsr-aaa1tensor).^2, [1 2])).^.5;
+  tnsf2norms = squeeze(sum((ftnsr-aaa2tensor).^2, [1 2])).^.5;
 end
 
 figure
-semilogy(err1,'b*','markersize',14); hold on;
-semilogy(err2,'ro','markersize',14);
+semilogy(tnsf1norms,'b*','markersize',14); hold on;
+semilogy(tnsf2norms,'ro','markersize',14);
 legend('Block-AAA','SetValued-AAA');
 ylabel('Error (2-norm of the deviation)');
 xlabel('Frequency');
