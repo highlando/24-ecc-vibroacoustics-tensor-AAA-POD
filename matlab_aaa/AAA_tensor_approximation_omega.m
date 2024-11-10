@@ -86,7 +86,7 @@ for largeorsmall = 1:4
   end
   tnsfnorms = zeros(1, 391);
   for w = pts
-    tnsfnorms(1, w-9) = norm(ftnsr(:, :, w-9)-aaatensor(:, :, w-9));
+    tnsfnorms(1, w-9) = norm(ftnsr(:, :, w-9)-aaatensor(:, :, w-9), 'fro');
   end
 
   figure(10101)
