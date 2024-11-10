@@ -85,34 +85,37 @@ for ctol = tolvec
   %Block-AAA selects
   selected_pts = out1.zk.';
 
+  aaa1tensor = zeros(nx, nx, length(pts));
+  aaa2tensor = zeros(nx, nx, length(pts));
   for ii = 1:length(pts)
-  %     err1(ii)= norm(FF{ii}-R1(pts(ii)));
-  %     err2(ii)= norm(FF{ii}-R2(pts(ii)));
-      Fap1 = dvcso * R1(pts(ii)) * dvcsot';
-      Fap2 = dvcso * R2(pts(ii)) * dvcsot';
-      Fex = ftnsr(:, :, ii);
-      err1(ii)= norm(Fex-Fap1, 'fro');
-      err2(ii)= norm(Fex-Fap2, 'fro');
+    aaa1tensor(:, :, ii) = R1(pts(ii));
+    aaa2tensor(:, :, ii) = R2(pts(ii));
+  end
+  for w = out1.zk
+      aaa1tensor(:, :, w-9) = dtnsr(:, :, w-9);
+  end
+  for w = zk2
+      aaa2tensor(:, :, w-9) = dtnsr(:, :, w-9);
+  end
+  if not (largeorsmall == 4)
+    prj1dtnsro = nmodeproduct(aaa1tensor, dvcsot, 2);
+    aaa1tensor = nmodeproduct(prj1dtnsro, dvcso, 1);
+    prj2dtnsro = nmodeproduct(aaa2tensor, dvcsot, 2);
+    aaa2tensor = nmodeproduct(prj2dtnsro, dvcso, 1);
   end
 
-  err1 = zeros(length(pts), 1);
-  err2 = zeros(length(pts), 1);
-  for ii = 1:length(pts)
-      app1 = dvcso * R1(pts(ii)) * dvcsot';
-      app2 = dvcso * R2(pts(ii)) * dvcsot';
-      err1(ii) = norm(ftnsr(:, :, ii)-app1, 'fro');
-      err2(ii) = norm(ftnsr(:, :, ii)-app2, 'fro');
-  end
   fprintf('blk: nx: %d, tol: %.1e, m: %d, err: %.2e\n', ... 
-          nx, ctol, ord1-1, norm(err1))
+          nx, ctol, ord1-1, norm(ftnsr-aaa1tensor, 'fro'))
   fprintf('set: nx: %d, tol: %.1e, m: %d, err: %.2e\n', ...
-          nx, ctol, ord2-1, norm(err2))
+          nx, ctol, ord2-1, norm(ftnsr-aaa2tensor, 'fro'))
 
+  tnsf1norms = squeeze(sum((ftnsr-aaa1tensor).^2, [1 2])).^.5;
+  tnsf2norms = squeeze(sum((ftnsr-aaa2tensor).^2, [1 2])).^.5;
 end
 
 figure
-semilogy(err1,'b*','markersize',14); hold on;
-semilogy(err2,'ro','markersize',14);
+semilogy(tnsf1norms,'b*','markersize',14); hold on;
+semilogy(tnsf2norms,'ro','markersize',14);
 legend('Block-AAA','SetValued-AAA');
 ylabel('Error (2-norm of the deviation)');
 xlabel('Frequency');

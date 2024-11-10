@@ -76,18 +76,14 @@ for largeorsmall = 1:4
   selected_pts = out1.zk.';
 
   aaatensor = zeros(nxy, nxy, 391);
-  for w = pts
-    aaatensor(:, :, w-9) = R1(w);
+  for ii = 1:length(pts)
+    aaatensor(:, :, ii) = R1(pts(ii));
   end
   if not (largeorsmall == 4)
     prjdtnsro = nmodeproduct(aaatensor, dvcsot, 2);
-    prjdtnsr = nmodeproduct(prjdtnsro, dvcso, 1);
-    aaatensor = prjdtnsr;
+    aaatensor = nmodeproduct(prjdtnsro, dvcso, 1);
   end
-  tnsfnorms = zeros(1, 391);
-  for w = pts
-    tnsfnorms(1, w-9) = norm(ftnsr(:, :, w-9)-aaatensor(:, :, w-9));
-  end
+  tnsfnorms = squeeze(sum((ftnsr-aaatensor).^2, [1 2])).^.5;
 
   figure(10101)
   % semilogy(abs(ftnsr(:)-aaatensor(:)), 'DisplayName', clgnd)
